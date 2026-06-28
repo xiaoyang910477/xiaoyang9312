@@ -12,7 +12,11 @@
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* 自定义背景图，图片文件名必须是 bg.jpg */
+            background: url("bg.jpg") center center / cover no-repeat fixed;
+            /* 黑色半透明遮罩，防止图片太亮看不清文字 */
+            background-color: rgba(0, 0, 0, 0.4);
+            background-blend-mode: multiply;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
