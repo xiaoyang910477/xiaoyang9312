@@ -9,9 +9,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: none;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
             background: url("bg.jpg") center center / cover no-repeat fixed;
             min-height: 100vh;
             display: flex;
@@ -20,52 +22,252 @@
             justify-content: space-between;
             color: white;
             text-align: center;
-            padding: 40px 20px;
+            padding: 18px 15px 25px;
+            overflow-x: hidden;
         }
+
+        /* 全局淡入加载动画 */
+        @keyframes pageFade {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 标题流光渐变动画 */
+        @keyframes titleShine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 按钮顺滑弹跳动画 */
+        @keyframes bounceJump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
         .header {
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-        .domain {
-            font-size: 1.2rem;
-            background: rgba(255, 255, 255, 0.25);
-            padding: 10px 25px;
-            border-radius: 30px;
-            display: inline-block;
-            backdrop-filter: blur(5px);
-        }
-        .links {
+            animation: pageFade 1.2s ease-out;
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3.6rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ffffff, #ffb8d8, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleShine 3s linear infinite;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.25);
+            letter-spacing: 4px;
+        }
+
+        .domain {
+            font-size: 1.22rem;
+            color: white;
+            padding: 11px 32px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .domain:hover {
+            transform: scale(1.03);
+        }
+
+        .contact-btn {
+            padding: 13px 30px;
+            background: #ff4d94;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            cursor: none;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+            box-shadow: 0 4px 14px rgba(255, 77, 148, 0.35);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 0 8px 24px rgba(255, 77, 148, 0.45);
+            background: #ff3385;
+        }
+
+        .links-wrap {
+            animation: pageFade 1.6s ease-out;
+            max-width: 1000px;
+            width: 100%;
+            padding: 0;
+            background: none;
+        }
+
+        /* 文件夹容器 */
+        .folder-box {
+            margin-bottom: 20px;
+        }
+        /* 文件夹标题按钮 */
+        .folder-title {
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #4458cc;
+            border-radius: 24px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            cursor: none;
+            margin-bottom: 12px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .folder-title:hover {
+            background: #fff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(68, 88, 204, 0.2);
+        }
+        /* 子链接容器，默认隐藏 */
+        .sub-links {
+            display: none;
+            gap: 14px;
             justify-content: center;
             flex-wrap: wrap;
-            max-width: 900px;
         }
-        .links button,
-        .links a {
-            padding: 12px 22px;
-            background: rgba(255, 255, 255, 0.9);
+        /* 鼠标悬浮文件夹自动展开子链接 */
+        .folder-box:hover .sub-links {
+            display: flex;
+        }
+        /* 子链接按钮样式 */
+        .sub-links a {
+            padding: 11px 20px;
+            background: rgba(255, 255, 255, 0.92);
             color: #667eea;
             border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.98rem;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+            cursor: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.07);
         }
-        .links button:hover,
-        .links a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+        /* 子链接悬浮持续弹跳 */
+        .sub-links a:hover {
+            animation: bounceJump 0.9s ease-in-out infinite;
+            box-shadow: 0 9px 20px rgba(102, 126, 234, 0.2);
+            background: #ffffff;
+            color: #5265d8;
+        }
+
+        /* 可爱云朵鼠标皮肤 */
+        .cloud-cursor {
+            position: fixed;
+            width: 46px;
+            height: 30px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease-out;
+        }
+
+        .cloud {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cloud-part {
+            position: absolute;
             background: white;
+            border-radius: 50%;
+            box-shadow: inset -5px -5px 12px rgba(0,0,0,0.06), 0 4px 12px rgba(255, 77, 148, 0.35);
         }
-        /* QQ弹窗样式 */
+
+        .cloud-big {
+            width: 28px;
+            height: 28px;
+            left: 9px;
+            top: 2px;
+        }
+
+        .cloud-middle {
+            width: 22px;
+            height: 22px;
+            left: 0;
+            top: 8px;
+        }
+
+        .cloud-small {
+            width: 18px;
+            height: 18px;
+            right: 0;
+            top: 10px;
+        }
+
+        .cloud-face {
+            position: absolute;
+            width: 16px;
+            height: 12px;
+            left: 50%;
+            top: 8px;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .cloud-eye {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ff66a3;
+            border-radius: 50%;
+            top: 4px;
+        }
+
+        .cloud-eye.left {
+            left: 2px;
+        }
+
+        .cloud-eye.right {
+            right: 2px;
+        }
+
+        .cloud-mouth {
+            position: absolute;
+            width: 6px;
+            height: 3px;
+            border: 2px solid #ff66a3;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            left: 50%;
+            top: 9px;
+            transform: translateX(-50%);
+        }
+
+        .cloud-blush {
+            position: absolute;
+            width: 5px;
+            height: 3px;
+            background: rgba(255, 102, 163, 0.5);
+            border-radius: 50%;
+            top: 8px;
+        }
+
+        .cloud-blush.left {
+            left: 0;
+        }
+
+        .cloud-blush.right {
+            right: 0;
+        }
+
+        /* 点击云朵压扁 */
+        .cloud-cursor.active {
+            transform: translate(-50%, -50%) scaleY(0.85);
+        }
+
+        /* 弹窗样式 */
         .popup {
             display: none;
             position: fixed;
@@ -73,48 +275,80 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.55);
             align-items: center;
             justify-content: center;
+            animation: pageFade 0.3s ease;
         }
+
         .popup-content {
             background: white;
             color: #333;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 38px 30px;
+            border-radius: 22px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 44px rgba(0,0,0,0.32);
+            max-width: 540px;
+            width: 92%;
         }
+
         .popup-content h3 {
-            margin-bottom: 15px;
-            color: #667eea;
+            margin-bottom: 28px;
+            color: #ff4d94;
+            font-size: 2.1rem;
         }
-        .popup-content .qq-number {
-            font-size: 1.5rem;
+
+        .contact-info {
+            font-size: 1.85rem;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 28px;
+            line-height: 2.1;
         }
-        .popup-content .copy-btn {
-            padding: 8px 16px;
-            background: #667eea;
+
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .copy-qq-btn, .copy-wechat-btn {
+            padding: 11px 22px;
+            background: #ff4d94;
             color: white;
             border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            margin-right: 10px;
+            border-radius: 28px;
+            font-size: 1rem;
+            cursor: none;
+            transition: all 0.3s ease;
         }
-        .popup-content .close-btn {
-            padding: 8px 16px;
-            background: #ccc;
+
+        .copy-qq-btn:hover, .copy-wechat-btn:hover {
+            transform: translateY(-3px);
+            background: #ff3385;
+            box-shadow: 0 5px 16px rgba(255,77,148,0.3);
+        }
+
+        .close-btn {
+            padding: 11px 22px;
+            background: #cccccc;
             color: #333;
             border: none;
-            border-radius: 20px;
-            cursor: pointer;
+            border-radius: 28px;
+            font-size: 1rem;
+            cursor: none;
+            transition: all 0.3s ease;
         }
+
+        .close-btn:hover {
+            background: #bbbbbb;
+            transform: translateY(-3px);
+        }
+
         .copy-success {
             color: #28a745;
-            margin-top: 10px;
-            font-size: 0.9rem;
+            margin-top: 18px;
+            font-size: 1.05rem;
         }
     </style>
 </head>
@@ -124,47 +358,122 @@
         <div class="domain">
             🌐 小阳宝宝的家：yangxiaoyang.fun
         </div>
+        <button class="contact-btn" onclick="showContact()">📞 联系我</button>
     </div>
 
-    <div class="links">
-        <a href="https://www.lanzoui.com/" target="_blank">☁️ 蓝奏云</a>
-        <a href="https://lsdy.lanzoui.com/b0bwa7gif" target="_blank">🤖 搞机助手</a>
-        <a href="https://wwauy.lanzouv.com/ie36U3rt2yvc" target="_blank">🌸 紫罗兰</a>
-        <a href="https://geekuninstaller.com/download" target="_blank">🧹 Geek</a>
-        <a href="https://xiaomirom.com/" target="_blank">📦 小米包</a>
-        <a href="https://www.miui.com/unlock/download.html" target="_blank">🔓 小米BL官网</a>
-        <a href="https://user.123pan.cn/centerlogin" target="_blank">💾 123云盘</a>
-        <a href="https://www.doubao.com/chat/" target="_blank">🤖 豆包</a>
-        <a href="https://live.52tt.com/" target="_blank">🎮 TT娱乐版</a>
-        <a href="https://www.52tt.com/?channel=B59940517.win_gang_pc&msclkid=2b114d2841ef1ae6acfa2769c97ac215" target="_blank">🎮 TT游戏版</a>
-        <button onclick="showQQ()">📞 联系我</button>
+    <div class="links-wrap">
+        <!-- 第一个文件夹：刷机专区 -->
+        <div class="folder-box">
+            <button class="folder-title">📂 刷机专区</button>
+            <div class="sub-links">
+                <a href="https://www.lanzoui.com/" target="_blank">☁️ 蓝奏云</a>
+                <a href="https://lsdy.lanzoui.com/b0bwa7gif" target="_blank">🤖 搞机助手</a>
+                <a href="https://wwauy.lanzouv.com/ie36U3rt2yvc" target="_blank">🌸 紫罗兰</a>
+                <a href="https://xiaomirom.com/" target="_blank">📦 小米包</a>
+                <a href="https://www.miui.com/unlock/download.html" target="_blank">🔓 小米BL官网</a>
+                <a href="https://user.123pan.cn/centerlogin" target="_blank">💾 123云盘</a>
+                <a href="https://wwbjc.lanzouu.com/iNlof3r6em0d" target="_blank">🔧 刷机驱动（1234）</a>
+            </div>
+        </div>
+
+        <!-- 第二个文件夹：电脑官网 -->
+        <div class="folder-box">
+            <button class="folder-title">📂 电脑官网</button>
+            <div class="sub-links">
+                <a href="https://geekuninstaller.com/download" target="_blank">🧹 Geek</a>
+                <a href="https://www.doubao.com/chat/" target="_blank">🤖 豆包</a>
+                <a href="https://live.52tt.com/" target="_blank">🎮 TT娱乐版</a>
+                <a href="https://www.52tt.com/?channel=B59940517.win_gang_pc" target="_blank">🎮 TT游戏版</a>
+                <a href="https://pc.weixin.qq.com/" target="_blank">💬 微信官网</a>
+                <a href="https://im.qq.com/index/#/" target="_blank">🐧 QQ官网</a>
+                <a href="https://download.kugou.com/" target="_blank">🎧 酷狗</a>
+                <a href="https://music.163.com/#/download" target="_blank">🎵 网易云</a>
+                <a href="https://y.qq.com/download/index.html" target="_blank">🎧 QQ音乐</a>
+            </div>
+        </div>
+
+        <!-- 第三个文件夹：电脑摧毁 -->
+        <div class="folder-box">
+            <button class="folder-title">📂 电脑摧毁</button>
+            <div class="sub-links">
+                <a href="https://wwbjc.lanzouu.com/iN5kX3tgx8uf" target="_blank">🎰 摩纳哥全套</a>
+            </div>
+        </div>
     </div>
 
-    <!-- QQ弹窗 -->
-    <div class="popup" id="qqPopup">
+    <!-- 可爱云朵鼠标皮肤 -->
+    <div class="cloud-cursor" id="cloudCursor">
+        <div class="cloud">
+            <div class="cloud-part cloud-middle"></div>
+            <div class="cloud-part cloud-big"></div>
+            <div class="cloud-part cloud-small"></div>
+            <div class="cloud-face">
+                <div class="cloud-eye left"></div>
+                <div class="cloud-eye right"></div>
+                <div class="cloud-mouth"></div>
+                <div class="cloud-blush left"></div>
+                <div class="cloud-blush right"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 联系弹窗 -->
+    <div class="popup" id="contactPopup">
         <div class="popup-content">
-            <h3>我的QQ</h3>
-            <div class="qq-number">2248653591</div>
-            <button class="copy-btn" onclick="copyQQ()">复制QQ号</button>
-            <button class="close-btn" onclick="hideQQ()">关闭</button>
-            <div class="copy-success" id="copySuccess" style="display: none;">✅ 复制成功！</div>
+            <h3>联系小阳</h3>
+            <div class="contact-info">
+                QQ：2248653591<br>
+                微信：yangxiaoyang9312
+            </div>
+            <div class="btn-group">
+                <button class="copy-qq-btn" onclick="copyQQ()">🐧 复制QQ</button>
+                <button class="copy-wechat-btn" onclick="copyWechat()">💬 复制微信</button>
+                <button class="close-btn" onclick="hideContact()">关闭</button>
+            </div>
+            <div class="copy-success" id="copySuccess" style="display: none;"></div>
         </div>
     </div>
 
     <script>
-        function showQQ() {
-            document.getElementById('qqPopup').style.display = 'flex';
-            document.getElementById('copySuccess').style.display = 'none';
+        const cloudCursor = document.getElementById("cloudCursor");
+
+        document.addEventListener("mousemove", (e) => {
+            cloudCursor.style.left = e.clientX + "px";
+            cloudCursor.style.top = e.clientY + "px";
+        });
+
+        document.addEventListener("mousedown", () => {
+            cloudCursor.classList.add("active");
+        });
+
+        document.addEventListener("mouseup", () => {
+            cloudCursor.classList.remove("active");
+        });
+
+        function showContact() {
+            document.getElementById("contactPopup").style.display = "flex";
+            document.getElementById("copySuccess").style.display = "none";
         }
-        function hideQQ() {
-            document.getElementById('qqPopup').style.display = 'none';
+
+        function hideContact() {
+            document.getElementById("contactPopup").style.display = "none";
         }
+
         function copyQQ() {
-            const qq = "2248653591";
-            navigator.clipboard.writeText(qq).then(() => {
+            navigator.clipboard.writeText("2248653591").then(() => {
+                document.getElementById('copySuccess').textContent = "✅ QQ号码复制成功！";
                 document.getElementById('copySuccess').style.display = 'block';
             }).catch(err => {
-                alert("复制失败，请手动复制：" + qq);
+                alert("复制失败，请手动复制QQ：2248653591");
+            });
+        }
+
+        function copyWechat() {
+            navigator.clipboard.writeText("yangxiaoyang9312").then(() => {
+                document.getElementById('copySuccess').textContent = "✅ 微信号复制成功！";
+                document.getElementById('copySuccess').style.display = 'block';
+            }).catch(err => {
+                alert("复制失败，请手动复制微信：yangxiaoyang9312");
             });
         }
     </script>
