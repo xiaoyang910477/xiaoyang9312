@@ -49,20 +49,77 @@
             display: inline-block;
             margin-bottom: 30px;
         }
-        .links a {
-            display: inline-block;
-            margin: 0 10px;
+        .links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .links button {
             padding: 12px 24px;
             background: white;
             color: #667eea;
-            text-decoration: none;
+            border: none;
             border-radius: 30px;
             font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
-        .links a:hover {
+        .links button:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        /* 弹窗样式 */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-content {
+            background: white;
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .popup-content h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        .popup-content .qq-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .popup-content .copy-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .popup-content .close-btn {
+            padding: 8px 16px;
+            background: #ccc;
+            color: #333;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .copy-success {
+            color: #28a745;
+            margin-top: 10px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -74,9 +131,37 @@
             🌐 我的域名：yangxiaoyang.fun
         </div>
         <div class="links">
-            <a href="https://github.com/xiaoyang910477" target="_blank">GitHub</a>
-            <a href="mailto:2248653591@qq.com">联系我</a>
+            <button onclick="showQQ()">联系我</button>
         </div>
     </div>
+
+    <!-- QQ弹窗 -->
+    <div class="popup" id="qqPopup">
+        <div class="popup-content">
+            <h3>我的QQ</h3>
+            <div class="qq-number">2248653591</div>
+            <button class="copy-btn" onclick="copyQQ()">复制QQ号</button>
+            <button class="close-btn" onclick="hideQQ()">关闭</button>
+            <div class="copy-success" id="copySuccess" style="display: none;">✅ 复制成功！</div>
+        </div>
+    </div>
+
+    <script>
+        function showQQ() {
+            document.getElementById('qqPopup').style.display = 'flex';
+            document.getElementById('copySuccess').style.display = 'none';
+        }
+        function hideQQ() {
+            document.getElementById('qqPopup').style.display = 'none';
+        }
+        function copyQQ() {
+            const qq = "2248653591";
+            navigator.clipboard.writeText(qq).then(() => {
+                document.getElementById('copySuccess').style.display = 'block';
+            }).catch(err => {
+                alert("复制失败，请手动复制：" + qq);
+            });
+        }
+    </script>
 </body>
 </html>
