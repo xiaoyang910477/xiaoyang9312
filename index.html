@@ -135,8 +135,8 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-        /* 鼠标悬浮文件夹自动展开子链接 */
-        .folder-box:hover .sub-links {
+        /* 只有文件夹拥有expanded类才显示子链接，移除hover展开 */
+        .folder-box.expanded .sub-links {
             display: flex;
         }
         /* 子链接按钮样式 */
@@ -436,7 +436,20 @@
 
     <script>
         const cloudCursor = document.getElementById("cloudCursor");
+        // 获取所有文件夹标题按钮
+        const folderTitles = document.querySelectorAll('.folder-title');
 
+        // 点击切换展开/收起状态
+        folderTitles.forEach(titleBtn => {
+            titleBtn.addEventListener('click', function(){
+                // 获取当前文件夹外层容器
+                const parentFolder = this.closest('.folder-box');
+                // 切换expanded类，有则收起，无则展开
+                parentFolder.classList.toggle('expanded');
+            })
+        })
+
+        // 云朵鼠标跟随逻辑
         document.addEventListener("mousemove", (e) => {
             cloudCursor.style.left = e.clientX + "px";
             cloudCursor.style.top = e.clientY + "px";
@@ -450,6 +463,7 @@
             cloudCursor.classList.remove("active");
         });
 
+        // 联系弹窗函数
         function showContact() {
             document.getElementById("contactPopup").style.display = "flex";
             document.getElementById("copySuccess").style.display = "none";
@@ -459,6 +473,7 @@
             document.getElementById("contactPopup").style.display = "none";
         }
 
+        // 复制账号功能
         function copyQQ() {
             navigator.clipboard.writeText("2248653591").then(() => {
                 document.getElementById('copySuccess').textContent = "✅ QQ号码复制成功！";
