@@ -12,57 +12,48 @@
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* 自定义背景图，图片文件名必须是 bg.jpg */
             background: url("bg.jpg") center center / cover no-repeat fixed;
-            /* 黑色半透明遮罩，防止图片太亮看不清文字 */
-            background-color: rgba(0, 0, 0, 0.4);
-            background-blend-mode: multiply;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             color: white;
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            max-width: 680px;
-            width: 100%;
+        .header {
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         h1 {
             font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
         }
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
+        .sub-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
         }
         .domain {
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 10px 20px;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 10px 25px;
             border-radius: 30px;
             display: inline-block;
-            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
         }
         .links {
             display: flex;
             gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
+            max-width: 900px;
         }
         .links button,
         .links a {
-            padding: 12px 20px;
-            background: white;
+            padding: 12px 22px;
+            background: rgba(255, 255, 255, 0.9);
             color: #667eea;
             border: none;
             border-radius: 30px;
@@ -71,11 +62,13 @@
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
         }
         .links button:hover,
         .links a:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+            background: white;
         }
         /* QQ弹窗样式 */
         .popup {
@@ -131,23 +124,24 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="header">
         <h1>👋 你好，我是小阳宝宝</h1>
-        <p>这是我的网址里面有一些网址点击自动跳转</p>
+        <div class="sub-title">这是我的网址里面有一些网址点击自动跳转</div>
         <div class="domain">
             🌐 小阳宝宝的家：yangxiaoyang.fun
         </div>
-        <div class="links">
-            <a href="https://www.lanzoui.com/" target="_blank">蓝奏云</a>
-            <a href="https://lsdy.lanzoui.com/b0bwa7gif" target="_blank">搞机助手</a>
-            <a href="https://wwauy.lanzouv.com/ie36U3rt2yvc" target="_blank">紫罗兰</a>
-            <a href="https://geekuninstaller.com/download" target="_blank">Geek</a>
-            <a href="https://xiaomirom.com/" target="_blank">小米包</a>
-            <a href="https://www.miui.com/unlock/download.html" target="_blank">小米BL官网</a>
-            <a href="https://user.123pan.cn/centerlogin" target="_blank">123云盘</a>
-            <a href="https://www.doubao.com/chat/" target="_blank">豆包</a>
-            <button onclick="showQQ()">联系我</button>
-        </div>
+    </div>
+
+    <div class="links">
+        <a href="https://www.lanzoui.com/" target="_blank">☁️ 蓝奏云</a>
+        <a href="https://lsdy.lanzoui.com/b0bwa7gif" target="_blank">🤖 搞机助手</a>
+        <a href="https://wwauy.lanzouv.com/ie36U3rt2yvc" target="_blank">🌸 紫罗兰</a>
+        <a href="https://geekuninstaller.com/download" target="_blank">🧹 Geek</a>
+        <a href="https://xiaomirom.com/" target="_blank">📦 小米包</a>
+        <a href="https://www.miui.com/unlock/download.html" target="_blank">🔓 小米BL官网</a>
+        <a href="https://user.123pan.cn/centerlogin" target="_blank">💾 123云盘</a>
+        <a href="https://www.doubao.com/chat/" target="_blank">🤖 豆包</a>
+        <button onclick="showQQ()">📞 联系我</button>
     </div>
 
     <!-- QQ弹窗 -->
