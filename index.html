@@ -28,7 +28,7 @@
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
+            max-width: 680px;
             width: 100%;
         }
         h1 {
@@ -51,12 +51,13 @@
         }
         .links {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
         }
-        .links button {
-            padding: 12px 24px;
+        .links button,
+        .links a {
+            padding: 12px 20px;
             background: white;
             color: #667eea;
             border: none;
@@ -64,13 +65,15 @@
             font-weight: bold;
             font-size: 1rem;
             cursor: pointer;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
-        .links button:hover {
+        .links button:hover,
+        .links a:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-        /* 弹窗样式 */
+        /* QQ弹窗样式 */
         .popup {
             display: none;
             position: fixed;
@@ -131,6 +134,14 @@
             🌐 我的域名：yangxiaoyang.fun
         </div>
         <div class="links">
+            <a href="https://www.lanzoui.com/" target="_blank">蓝奏云</a>
+            <a href="https://lsdy.lanzoui.com/b0bwa7gif" target="_blank">搞机助手</a>
+            <a href="https://wwauy.lanzouv.com/ie36U3rt2yvc" target="_blank">紫罗兰</a>
+            <a href="https://geekuninstaller.com/download" target="_blank">Geek</a>
+            <a href="https://xiaomirom.com/" target="_blank">小米包</a>
+            <a href="https://www.miui.com/unlock/download.html" target="_blank">小米BL官网</a>
+            <a href="https://user.123pan.cn/centerlogin" target="_blank">123云盘</a>
+            <a href="https://www.doubao.com/chat/" target="_blank">豆包</a>
             <button onclick="showQQ()">联系我</button>
         </div>
     </div>
