@@ -14,16 +14,37 @@
 
         body {
             font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-            background: url("bg.jpg") center center / cover no-repeat fixed;
+            background: #222;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            color: white;
+            color: #ffffff;
             text-align: center;
             padding: 18px 15px 25px;
             overflow-x: hidden;
+        }
+
+        /* 全屏动态视频背景 */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -10;
+            opacity: 0.9;
+        }
+        /* 手机低配设备自动切换静态背景 */
+        @media (max-width:768px) {
+            .bg-video {
+                display: none;
+            }
+            body {
+                background: #222 url("./bg.jpg") center center / cover no-repeat fixed !important;
+            }
         }
 
         /* 全局淡入加载动画 */
@@ -135,7 +156,7 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-        /* 只有文件夹拥有expanded类才显示子链接，移除hover展开 */
+        /* 点击文件夹才展开，悬浮无反应 */
         .folder-box.expanded .sub-links {
             display: flex;
         }
@@ -161,7 +182,7 @@
             color: #5265d8;
         }
 
-        /* 可爱云朵鼠标皮肤 */
+        /* 云朵自定义鼠标 */
         .cloud-cursor {
             position: fixed;
             width: 46px;
@@ -262,12 +283,12 @@
             right: 0;
         }
 
-        /* 点击云朵压扁 */
+        /* 鼠标点击云朵压扁 */
         .cloud-cursor.active {
             transform: translate(-50%, -50%) scaleY(0.85);
         }
 
-        /* 弹窗样式 */
+        /* 联系弹窗样式 */
         .popup {
             display: none;
             position: fixed;
@@ -353,6 +374,11 @@
     </style>
 </head>
 <body>
+    <!-- muted 属性永久禁止视频声音，浏览器无法自动播放音频 -->
+    <video class="bg-video" autoplay muted loop playsinline preload="auto">
+        <source src="./bg.mp4" type="video/mp4">
+    </video>
+
     <div class="header">
         <h1>👋 窝是小阳家</h1>
         <div class="domain">
@@ -362,7 +388,7 @@
     </div>
 
     <div class="links-wrap">
-        <!-- 第一个文件夹：刷机专区 -->
+        <!-- 1.刷机专区 -->
         <div class="folder-box">
             <button class="folder-title">📂 刷机专区</button>
             <div class="sub-links">
@@ -376,7 +402,7 @@
             </div>
         </div>
 
-        <!-- 第二个文件夹：电脑官网 -->
+        <!-- 2.电脑官网 -->
         <div class="folder-box">
             <button class="folder-title">📂 电脑官网</button>
             <div class="sub-links">
@@ -392,7 +418,7 @@
             </div>
         </div>
 
-        <!-- 第三个文件夹：电脑摧毁（新增电脑炸弹链接） -->
+        <!-- 3.电脑摧毁 -->
         <div class="folder-box">
             <button class="folder-title">📂 电脑摧毁</button>
             <div class="sub-links">
@@ -401,16 +427,17 @@
             </div>
         </div>
 
-        <!-- 第四个文件夹：声卡（新增独立文件夹） -->
+        <!-- 4.声卡（含客所思降级+驱动官网） -->
         <div class="folder-box">
             <button class="folder-title">📂 声卡</button>
             <div class="sub-links">
                 <a href="https://wwbjc.lanzouu.com/i6OwW3tgxb4h" target="_blank">🎤 客所思降级（1234）</a>
+                <a href="http://www.kesuosi.com/xz.htm" target="_blank">🎧 客所思驱动官网</a>
             </div>
         </div>
     </div>
 
-    <!-- 可爱云朵鼠标皮肤 -->
+    <!-- 云朵鼠标元素 -->
     <div class="cloud-cursor" id="cloudCursor">
         <div class="cloud">
             <div class="cloud-part cloud-middle"></div>
@@ -445,20 +472,15 @@
 
     <script>
         const cloudCursor = document.getElementById("cloudCursor");
-        // 获取所有文件夹标题按钮
         const folderTitles = document.querySelectorAll('.folder-title');
 
-        // 点击切换展开/收起状态
         folderTitles.forEach(titleBtn => {
             titleBtn.addEventListener('click', function(){
-                // 获取当前文件夹外层容器
                 const parentFolder = this.closest('.folder-box');
-                // 切换expanded类，有则收起，无则展开
                 parentFolder.classList.toggle('expanded');
             })
         })
 
-        // 云朵鼠标跟随逻辑
         document.addEventListener("mousemove", (e) => {
             cloudCursor.style.left = e.clientX + "px";
             cloudCursor.style.top = e.clientY + "px";
@@ -472,7 +494,6 @@
             cloudCursor.classList.remove("active");
         });
 
-        // 联系弹窗函数
         function showContact() {
             document.getElementById("contactPopup").style.display = "flex";
             document.getElementById("copySuccess").style.display = "none";
@@ -482,7 +503,6 @@
             document.getElementById("contactPopup").style.display = "none";
         }
 
-        // 复制账号功能
         function copyQQ() {
             navigator.clipboard.writeText("2248653591").then(() => {
                 document.getElementById('copySuccess').textContent = "✅ QQ号码复制成功！";
