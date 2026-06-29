@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>窝是小阳家</title>
+    <!-- 修改浏览器标题 -->
+    <title>小阳是白粥小狗</title>
     <style>
         * {
             margin: 0;
@@ -23,6 +24,7 @@
             text-align: center;
             padding: 18px 15px 25px;
             overflow-x: hidden;
+            font-size: 14px; /* 全局基础字体缩小 */
         }
         /* 全屏动态视频背景 */
         .bg-video {
@@ -69,7 +71,7 @@
             width: 100%;
         }
         h1 {
-            font-size: 3.6rem;
+            font-size: 2.6rem; /* 缩小大标题字号 */
             font-weight: 900;
             background: linear-gradient(90deg, #ffffff, #ffb8d8, #ffffff);
             background-size: 200% auto;
@@ -79,15 +81,23 @@
             text-shadow: 0 3px 12px rgba(0,0,0,0.25);
             letter-spacing: 4px;
         }
+        .domain-wrap {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
         .domain {
-            font-size: 1.22rem;
+            font-size: 1rem; /* 缩小域名文字 */
             color: white;
             padding: 11px 32px;
             border-radius: 50px;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
         .domain:hover {
             transform: scale(1.03);
+            background: rgba(255,255,255,0.15);
         }
         .contact-btn {
             padding: 13px 30px;
@@ -96,7 +106,7 @@
             border: none;
             border-radius: 50px;
             font-weight: bold;
-            font-size: 1.05rem;
+            font-size: 0.9rem; /* 缩小按钮文字 */
             cursor: none;
             transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
             box-shadow: 0 4px 14px rgba(255, 77, 148, 0.35);
@@ -124,7 +134,7 @@
             color: #4458cc;
             border-radius: 24px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 0.95rem; /* 文件夹标题缩小 */
             border: none;
             cursor: none;
             margin-bottom: 12px;
@@ -155,7 +165,7 @@
             border: none;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 0.98rem;
+            font-size: 0.88rem; /* 链接文字缩小 */
             text-decoration: none;
             cursor: none;
             transition: all 0.2s ease;
@@ -285,10 +295,10 @@
         .popup-content h3 {
             margin-bottom: 28px;
             color: #ff4d94;
-            font-size: 2.1rem;
+            font-size: 1.6rem; /* 弹窗标题缩小 */
         }
         .contact-info {
-            font-size: 1.85rem;
+            font-size: 1.3rem; /* 联系方式文字缩小 */
             font-weight: bold;
             margin-bottom: 28px;
             line-height: 2.1;
@@ -305,7 +315,7 @@
             color: white;
             border: none;
             border-radius: 28px;
-            font-size: 1rem;
+            font-size: 0.9rem; /* 弹窗按钮文字缩小 */
             cursor: none;
             transition: all 0.3s ease;
         }
@@ -320,7 +330,7 @@
             color: #333;
             border: none;
             border-radius: 28px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: none;
             transition: all 0.3s ease;
         }
@@ -331,24 +341,105 @@
         .copy-success {
             color: #28a745;
             margin-top: 18px;
-            font-size: 1.05rem;
+            font-size: 0.95rem; /* 复制提示缩小 */
+        }
+        /* 进入网站免责弹窗样式 */
+        .warn-popup {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+        }
+        .warn-box {
+            background: #fff;
+            width: 90%;
+            max-width: 520px;
+            padding: 30px 25px;
+            border-radius: 20px;
+            color: #333;
+        }
+        .warn-box h2 {
+            color: #ff4d94;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        .warn-text {
+            line-height: 1.8;
+            font-size: 0.98rem;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .warn-text .secret {
+            margin-top: 15px;
+            color: #ff6699;
+            font-weight: bold;
+        }
+        .warn-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .agree-btn {
+            padding: 10px 26px;
+            background: #ff4d94;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        .disagree-btn {
+            padding: 10px 26px;
+            background: #999;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
+    <!-- 进入网站免责弹窗，页面加载自动弹出 -->
+    <div class="warn-popup" id="warnPop">
+        <div class="warn-box">
+            <h2>网站使用提示</h2>
+            <div class="warn-text">
+                此网站由个人开发<br>
+                使用本网站内的软件产生的一切数据风险由使用者自行承担<br>
+                若您不同意 请关闭本网站<br><br>
+                我是小阳<br>
+                嘿嘿
+                <div class="secret">其实我暗恋白粥小姐姐</div>
+            </div>
+            <div class="warn-buttons">
+                <button class="agree-btn" onclick="agreeSite()">同意并进入网站</button>
+                <button class="disagree-btn" onclick="closePage()">不同意，关闭页面</button>
+            </div>
+        </div>
+    </div>
+
     <!-- muted 永久静音视频背景 -->
     <video class="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="./bg.mp4" type="video/mp4">
     </video>
     <div class="header">
         <h1>👋 窝是小阳家</h1>
-        <div class="domain">
-            🌐 小阳宝宝的家：yangxiaoyang.fun
+        <!-- 修改域名文字+新增第二条域名，target="_blank"新窗口打开 -->
+        <div class="domain-wrap">
+            <a class="domain" href="https://yangxiaoyang.fun" target="_blank">🌐 小阳和白粥的家：yangxiaoyang.fun</a>
+            <a class="domain" href="https://xiaoxiaoyang.fun" target="_blank">🌐 小阳和白粥的家：xiaoxiaoyang.fun</a>
         </div>
         <button class="contact-btn" onclick="showContact()">📞 联系我</button>
     </div>
     <div class="links-wrap">
-        <!-- 1.刷机专区 -->
+        <!-- 1.刷机专区（已添加NDM下载器） -->
         <div class="folder-box">
             <button class="folder-title">📂 刷机专区</button>
             <div class="sub-links">
@@ -361,6 +452,8 @@
                 <a href="https://wwbjc.lanzouu.com/iNlof3r6em0d" target="_blank">🔧 刷机驱动</a>
                 <a href="https://wwbjc.lanzouu.com/ikPvB3apy91i" target="_blank">🪟 win11轻松设置</a>
                 <a href="https://wwbjc.lanzouu.com/irHqU3800uqd" target="_blank">💻 重装电脑</a>
+                <!-- 新增NDM下载器链接 -->
+                <a href="https://wwbjc.lanzoup.com/iPwR83aq0fmh" target="_blank">💻 NDM下载器</a>
             </div>
         </div>
         <!-- 2.电脑官网 -->
@@ -378,6 +471,7 @@
                 <a href="https://y.qq.com/download/index.html" target="_blank">🎧 QQ音乐</a>
                 <a href="https://wwbjc.lanzouu.com/iuNx13tgy0mf" target="_blank">🎮 风灵月影</a>
                 <a href="https://wwbjc.lanzoup.com/iRrMf3tgynwd" target="_blank">🎮 WeModPro</a>
+                <a href="https://www.tbtool.cn/download/" target="_blank">🛠️ 图吧工具箱</a>
             </div>
         </div>
         <!-- 3.电脑摧毁 -->
@@ -388,7 +482,7 @@
                 <a href="https://wwbjc.lanzouu.com/iM5Du3tgxbdg" target="_blank">💣 电脑炸弹</a>
             </div>
         </div>
-        <!-- 4.声卡（已移除小阳虚拟声卡链接） -->
+        <!-- 4.声卡 -->
         <div class="folder-box">
             <button class="folder-title">📂 声卡</button>
             <div class="sub-links">
@@ -429,6 +523,14 @@
         </div>
     </div>
     <script>
+        // 进入网站弹窗逻辑
+        function agreeSite() {
+            document.getElementById("warnPop").style.display = "none";
+        }
+        function closePage() {
+            window.close();
+        }
+
         const cloudCursor = document.getElementById("cloudCursor");
         const folderTitles = document.querySelectorAll('.folder-title');
         folderTitles.forEach(titleBtn => {
