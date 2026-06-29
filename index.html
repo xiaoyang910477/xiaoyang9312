@@ -168,7 +168,7 @@
         }
         .folder-title {
             padding: 14px 28px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 0.95);
             color: #4458cc;
             border-radius: 24px;
             font-weight: 700;
@@ -205,7 +205,7 @@
             text-decoration: none;
             cursor: none;
             transition: all 0.2s ease;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.07);
+            box-shadow: 0 3px 8 rgba(0,0,0,0.07);
         }
         .sub-links a:hover {
             animation: bounceJump 0.9s ease-in-out infinite;
@@ -576,7 +576,7 @@
                 <button class="folder-title">📂 电脑官网</button>
                 <div class="sub-links">
                     <a href="https://geekuninstaller.com/download" target="_blank">🧹 Geek</a>
-                    <a href="https://www.doubao.com/chat/" target="_blank">🤖 豆包</a>
+                    <a href="https://doubao.com/chat/" target="_blank">🤖 豆包</a>
                     <a href="https://live.52tt.com/" target="_blank">🎮 TT娱乐版</a>
                     <a href="https://www.52tt.com/?channel=B59940517.win_gang_pc" target="_blank">🎮 TT游戏版</a>
                     <a href="https://pc.weixin.qq.com/" target="_blank">💬 微信官网</a>
@@ -629,76 +629,55 @@ function switchPage(num) {
     }
 }
 
-// 【最终修复版搜索逻辑】自动展开匹配文件夹
+// 【修复搜索变量名错误】
 const searchInput = document.getElementById('searchInput');
 const emptyTip = document.getElementById('emptyTip');
 const allFolders = document.querySelectorAll('.folder-box');
 
-// 先保存每个文件夹原始的展开状态
+// 保存文件夹原始展开状态
 const folderOriginalExpanded = new Map();
 allFolders.forEach(folder => {
     folderOriginalExpanded.set(folder, folder.classList.contains('expanded'));
 });
 
-search.addEventListener('input', function(){
+// 正确绑定input事件
+searchInput.addEventListener('input', function(){
     const keyword = this.value.trim().toLowerCase();
     let matchNum = 0;
-
-    // 第一步：先重置所有文件夹状态
-    allFolders.forEach(folder => {
-        folder.classList.remove('expanded');
-    });
-
-    // 第二步：遍历所有链接，筛选并标记匹配的文件夹
+    // 重置所有文件夹
+    allFolders.forEach(folder => folder.classList.remove('expanded'));
     const allLinks = document.querySelectorAll('.sub-links a');
     allLinks.forEach(link => {
         const text = link.innerText.toLowerCase();
-        const folderBox = link.closest('.folder-box');
-        if (keyword === '' || text.includes(keyword)) {
+        const box = link.closest('.folder-box');
+        if(keyword === '' || text.includes(keyword)){
             link.style.display = 'flex';
+            box.classList.add('expanded');
             matchNum++;
-            // 自动展开包含匹配项的文件夹
-            folderBox.classList.add('expanded');
-        } else {
+        }else{
             link.style.display = 'none';
         }
     });
-
-    // 第三步：如果清空搜索，恢复文件夹原始展开状态
-    if (keyword === '') {
+    // 清空输入恢复原始状态
+    if(keyword === ''){
         allFolders.forEach(folder => {
-            if (folderOriginalExpanded.get(folder)) {
-                folder.classList.add('expanded');
-            } else {
-                folder.classList.remove('expanded');
-            }
+            if(folderOriginalExpanded.get(folder)) folder.classList.add('expanded');
         });
     }
-
-    // 控制空提示
     emptyTip.style.display = matchNum === 0 ? 'block' : 'none';
 });
 
 // 飘落文字
-const loveTexts = [
-    "小阳喜欢白粥",
-    "小阳爱白粥",
-    "小阳暗恋白粥",
-    "小阳想和白粥一直在一起"
-];
+const loveTexts = ["小阳喜欢白粥","小阳爱白粥","小阳暗恋白粥","小阳想和白粥一直在一起"];
 let fallTimer = null;
 let isLoopFall = false;
 
 // 免责弹窗
-function agreeSite() {
-    document.getElementById("warnPop").style.display = "none";
-}
-function closePage() {
-    window.close();
-}
+function agreeSite(){document.getElementById("warnPop").style.display = "none";}
+function closePage(){window.close();}
 
 // 生成飘落元素
-function spawnSingle() {
+function spawnSingle(){
     const container = document.getElementById("fallContainer");
     const item = document.createElement("div");
     const randomType = Math.random();
@@ -708,14 +687,14 @@ function spawnSingle() {
     item.style.left = left + "%";
     item.style.animationDelay = delay + "s";
     item.style.fontSize = size + "px";
-    if (randomType > 0.7) {
+    if(randomType > 0.7){
         item.className = "fall-text";
         item.textContent = loveTexts[Math.floor(Math.random() * loveTexts.length)];
-    } else if (randomType > 0.35) {
+    }else if(randomType > 0.35){
         item.className = "fall-item";
         item.innerHTML = "❤️";
         item.style.color = "#ff4d94";
-    } else {
+    }else{
         item.className = "fall-item";
         item.innerHTML = "❄️";
         item.style.color = "#ffffff";
@@ -724,7 +703,7 @@ function spawnSingle() {
     setTimeout(()=>item.remove(),10000);
 }
 
-// 520飘落开关
+// 520点击飘落（已修复可触发）
 document.getElementById("click520").addEventListener("click",()=>{
     if(!isLoopFall){
         isLoopFall = true;
@@ -735,41 +714,41 @@ document.getElementById("click520").addEventListener("click",()=>{
     }
 });
 
-// 文件夹展开收起
+// 文件夹点击展开
 const folderTitles = document.querySelectorAll('.folder-title');
-folderTitles.forEach(titleBtn => {
-    titleBtn.addEventListener('click', function(){
+folderTitles.forEach(title => {
+    title.addEventListener('click', function(){
         this.closest('.folder-box').classList.toggle('expanded');
-    })
+    });
 });
 
-// 云朵鼠标
+// 云朵自定义鼠标（完整修复，正常跟随）
 const cloudCursor = document.getElementById("cloudCursor");
-document.addEventListener("mousemove", (e) => {
+document.addEventListener("mousemove", e => {
     cloudCursor.style.left = e.clientX + "px";
     cloudCursor.style.top = e.clientY + "px";
 });
-document.addEventListener("mousedown", () => cloudCursor.classList.add("active"));
-document.addEventListener("mouseup", () => cloudCursor.classList.remove("active"));
+document.addEventListener("mousedown", ()=>cloudCursor.classList.add("active"));
+document.addEventListener("mouseup", ()=>cloudCursor.classList.remove("active"));
 
 // 复制联系方式
-function showContact() {
-    document.getElementById("contactPopup").style.display = "none";
+function showContact(){
+    document.getElementById("contactPopup").style.display = "flex";
     document.getElementById("copySuccess").style.display = "none";
 }
-function hideContact() {
+function hideContact(){
     document.getElementById("contactPopup").style.display = "none";
 }
-function copyQQ() {
-    navigator.clipboard.writeText("2248653591").then(() => {
+function copyQQ(){
+    navigator.clipboard.writeText("2248653591").then(()=>{
         document.getElementById('copySuccess').textContent = "✅ QQ号码复制成功！";
-        document.getElementById('copySuccess').style.display = 'block';
+        document.getElementById('copySuccess').style.display = "block";
     }).catch(()=>alert("复制失败，请手动复制QQ：2248653591"));
 }
-function copyWechat() {
-    navigator.clipboard.writeText("yangxiaoyang9312").then(() => {
+function copyWechat(){
+    navigator.clipboard.writeText("yangxiaoyang9312").then(()=>{
         document.getElementById('copySuccess').textContent = "✅ 微信号复制成功！";
-        document.getElementById('copySuccess').style.display = 'block';
+        document.getElementById('copySuccess').style.display = "block";
     }).catch(()=>alert("复制失败，请手动复制微信：yangxiaoyang9312"));
 }
 </script>
