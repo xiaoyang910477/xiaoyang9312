@@ -52,7 +52,6 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-        /* 双页面控制 */
         .page {
             width: 100%;
             animation: pageFade 0.45s ease-out;
@@ -60,7 +59,6 @@
         .page-hide {
             display: none !important;
         }
-        /* 首页第一页 */
         .page1-header {
             display: flex;
             flex-direction: column;
@@ -131,14 +129,12 @@
             box-shadow: 0 8px 24px rgba(255, 77, 148, 0.45);
             background: #ff3385;
         }
-        /* 第二页 工具区域：整体下移+加大文件夹间距 */
         .page2 {
             max-width: 1000px;
             margin: 80px auto 0;
             width: 100%;
             padding: 0 10px;
         }
-        /* 搜索框样式 */
         .search-box {
             width: 100%;
             margin-bottom: 35px;
@@ -162,13 +158,12 @@
             opacity: 0.7;
             display: none;
         }
-        /* 文件夹加大上下间距，不紧贴 */
         .folder-box {
             margin-bottom: 40px;
         }
         .folder-title {
             padding: 14px 28px;
-            background: rgba(255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             color: #4458cc;
             border-radius: 24px;
             font-weight: 700;
@@ -205,7 +200,7 @@
             text-decoration: none;
             cursor: none;
             transition: all 0.2s ease;
-            box-shadow: 0 3px 8 rgba(0,0,0,0.07);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.07);
         }
         .sub-links a:hover {
             animation: bounceJump 0.9s ease-in-out infinite;
@@ -375,7 +370,6 @@
             margin-top: 18px;
             font-size: 0.95rem;
         }
-        /* 居中弹窗 */
         .warn-popup {
             display: flex;
             position: fixed;
@@ -435,7 +429,6 @@
             font-size: 0.95rem;
             cursor: pointer;
         }
-        /* 飘落容器 */
         .fall-container {
             position: fixed;
             top: 0;
@@ -471,10 +464,41 @@
                 opacity: 0;
             }
         }
+
+        /* 猫爪切换按钮 */
+        .cat-paw-toggle {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 2px rgba(255, 77, 148, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            z-index: 9998;
+        }
+        .cat-paw-toggle:hover {
+            transform: scale(1.15);
+            background: #ffffff;
+            box-shadow: 0 6px 16px rgba(255, 77, 148, 0.45);
+        }
+        .cat-paw-toggle:active {
+            transform: scale(0.95);
+        }
+
+        /* 第二页内容底部留点空间，避免被猫爪遮挡 */
+        .page2 {
+            padding-bottom: 90px;
+        }
     </style>
 </head>
 <body>
-    <!-- 全局固定层：免责弹窗、飘落、鼠标、背景视频 -->
     <div class="warn-popup" id="warnPop">
         <div class="warn-box">
             <h2>网站使用提示</h2>
@@ -494,13 +518,13 @@
             </div>
         </div>
     </div>
-    <!-- 飘落容器 -->
+
     <div class="fall-container" id="fallContainer"></div>
-    <!-- 背景视频 -->
+
     <video class="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="./bg.mp4" type="video/mp4">
     </video>
-    <!-- 云朵鼠标 -->
+
     <div class="cloud-cursor" id="cloudCursor">
         <div class="cloud">
             <div class="cloud-part cloud-middle"></div>
@@ -515,7 +539,7 @@
             </div>
         </div>
     </div>
-    <!-- 联系弹窗 -->
+
     <div class="popup" id="contactPopup">
         <div class="popup-content">
             <h3>联系小阳</h3>
@@ -532,7 +556,7 @@
         </div>
     </div>
 
-    <!-- 第一页面：首页 -->
+    <!-- 第一页面 -->
     <div class="page" id="page1">
         <div class="page1-header">
             <h1>👋 白粥<span class="title-520" id="click520">520</span><span class="title-end" onclick="switchPage(2)">小阳</span></h1>
@@ -544,15 +568,14 @@
         </div>
     </div>
 
-    <!-- 第二页面：工具文件夹 -->
+    <!-- 第二页面 -->
     <div class="page page-hide" id="page2">
         <div class="page2">
-            <!-- 搜索框 -->
             <div class="search-box">
                 <input id="searchInput" placeholder="输入工具/网站名称搜索..." type="text">
             </div>
             <div class="empty-tip" id="emptyTip">未找到匹配的工具链接</div>
-            <!-- 刷机专区 -->
+
             <div class="folder-box">
                 <button class="folder-title">📂 刷机专区</button>
                 <div class="sub-links">
@@ -571,12 +594,12 @@
                     <a href="https://wwbjc.lanzoup.com/ijZIn3knztsj" target="_blank">📡 QPST9008</a>
                 </div>
             </div>
-            <!-- 电脑官网 -->
+
             <div class="folder-box">
                 <button class="folder-title">📂 电脑官网</button>
                 <div class="sub-links">
                     <a href="https://geekuninstaller.com/download" target="_blank">🧹 Geek</a>
-                    <a href="https://doubao.com/chat/" target="_blank">🤖 豆包</a>
+                    <a href="https://www.doubao.com/chat/" target="_blank">🤖 豆包</a>
                     <a href="https://live.52tt.com/" target="_blank">🎮 TT娱乐版</a>
                     <a href="https://www.52tt.com/?channel=B59940517.win_gang_pc" target="_blank">🎮 TT游戏版</a>
                     <a href="https://pc.weixin.qq.com/" target="_blank">💬 微信官网</a>
@@ -594,7 +617,7 @@
                     <a href="https://baoku.360.cn/sinfo/103259010_4000983.html" target="_blank">🩹 360急救箱</a>
                 </div>
             </div>
-            <!-- 电脑摧毁 -->
+
             <div class="folder-box">
                 <button class="folder-title">📂 电脑摧毁</button>
                 <div class="sub-links">
@@ -602,7 +625,7 @@
                     <a href="https://wwbjc.lanzouu.com/iM5Du3tgxbdg" target="_blank">💣 电脑炸弹</a>
                 </div>
             </div>
-            <!-- 声卡 -->
+
             <div class="folder-box">
                 <button class="folder-title">📂 声卡</button>
                 <div class="sub-links">
@@ -615,69 +638,73 @@
         </div>
     </div>
 
+    <!-- 猫爪切换按钮 -->
+    <div class="cat-paw-toggle" id="catPawBtn" title="切换页面">🐾</div>
+
 <script>
-// 页面切换
 function switchPage(num) {
     const p1 = document.getElementById('page1');
     const p2 = document.getElementById('page2');
-    if(num === 1){
+    if (num === 1) {
         p1.classList.remove('page-hide');
         p2.classList.add('page-hide');
-    }else{
+    } else {
         p1.classList.add('page-hide');
         p2.classList.remove('page-hide');
     }
 }
 
-// 【修复搜索变量名错误】
 const searchInput = document.getElementById('searchInput');
 const emptyTip = document.getElementById('emptyTip');
 const allFolders = document.querySelectorAll('.folder-box');
 
-// 保存文件夹原始展开状态
 const folderOriginalExpanded = new Map();
 allFolders.forEach(folder => {
     folderOriginalExpanded.set(folder, folder.classList.contains('expanded'));
 });
 
-// 正确绑定input事件
-searchInput.addEventListener('input', function(){
+searchInput.addEventListener('input', function () {
     const keyword = this.value.trim().toLowerCase();
     let matchNum = 0;
-    // 重置所有文件夹
+
     allFolders.forEach(folder => folder.classList.remove('expanded'));
+
     const allLinks = document.querySelectorAll('.sub-links a');
     allLinks.forEach(link => {
         const text = link.innerText.toLowerCase();
         const box = link.closest('.folder-box');
-        if(keyword === '' || text.includes(keyword)){
+        if (keyword === '' || text.includes(keyword)) {
             link.style.display = 'flex';
             box.classList.add('expanded');
             matchNum++;
-        }else{
+        } else {
             link.style.display = 'none';
         }
     });
-    // 清空输入恢复原始状态
-    if(keyword === ''){
+
+    if (keyword === '') {
         allFolders.forEach(folder => {
-            if(folderOriginalExpanded.get(folder)) folder.classList.add('expanded');
+            if (folderOriginalExpanded.get(folder)) {
+                folder.classList.add('expanded');
+            }
         });
     }
+
     emptyTip.style.display = matchNum === 0 ? 'block' : 'none';
 });
 
-// 飘落文字
-const loveTexts = ["小阳喜欢白粥","小阳爱白粥","小阳暗恋白粥","小阳想和白粥一直在一起"];
+const loveTexts = ["小阳喜欢白粥", "小阳爱白粥", "小阳暗恋白粥", "小阳想和白粥一直在一起"];
 let fallTimer = null;
 let isLoopFall = false;
 
-// 免责弹窗
-function agreeSite(){document.getElementById("warnPop").style.display = "none";}
-function closePage(){window.close();}
+function agreeSite() {
+    document.getElementById("warnPop").style.display = "none";
+}
+function closePage() {
+    window.close();
+}
 
-// 生成飘落元素
-function spawnSingle(){
+function spawnSingle() {
     const container = document.getElementById("fallContainer");
     const item = document.createElement("div");
     const randomType = Math.random();
@@ -687,70 +714,79 @@ function spawnSingle(){
     item.style.left = left + "%";
     item.style.animationDelay = delay + "s";
     item.style.fontSize = size + "px";
-    if(randomType > 0.7){
+
+    if (randomType > 0.7) {
         item.className = "fall-text";
         item.textContent = loveTexts[Math.floor(Math.random() * loveTexts.length)];
-    }else if(randomType > 0.35){
+    } else if (randomType > 0.35) {
         item.className = "fall-item";
         item.innerHTML = "❤️";
         item.style.color = "#ff4d94";
-    }else{
+    } else {
         item.className = "fall-item";
         item.innerHTML = "❄️";
         item.style.color = "#ffffff";
     }
+
     container.appendChild(item);
-    setTimeout(()=>item.remove(),10000);
+    setTimeout(() => item.remove(), 10000);
 }
 
-// 520点击飘落（已修复可触发）
-document.getElementById("click520").addEventListener("click",()=>{
-    if(!isLoopFall){
+document.getElementById("click520").addEventListener("click", () => {
+    if (!isLoopFall) {
         isLoopFall = true;
-        fallTimer = setInterval(spawnSingle,300);
-    }else{
+        fallTimer = setInterval(spawnSingle, 300);
+    } else {
         isLoopFall = false;
         clearInterval(fallTimer);
     }
 });
 
-// 文件夹点击展开
 const folderTitles = document.querySelectorAll('.folder-title');
 folderTitles.forEach(title => {
-    title.addEventListener('click', function(){
+    title.addEventListener('click', function () {
         this.closest('.folder-box').classList.toggle('expanded');
     });
 });
 
-// 云朵自定义鼠标（完整修复，正常跟随）
 const cloudCursor = document.getElementById("cloudCursor");
 document.addEventListener("mousemove", e => {
     cloudCursor.style.left = e.clientX + "px";
     cloudCursor.style.top = e.clientY + "px";
 });
-document.addEventListener("mousedown", ()=>cloudCursor.classList.add("active"));
-document.addEventListener("mouseup", ()=>cloudCursor.classList.remove("active"));
+document.addEventListener("mousedown", () => cloudCursor.classList.add("active"));
+document.addEventListener("mouseup", () => cloudCursor.classList.remove("active"));
 
-// 复制联系方式
-function showContact(){
+function showContact() {
     document.getElementById("contactPopup").style.display = "flex";
     document.getElementById("copySuccess").style.display = "none";
 }
-function hideContact(){
+function hideContact() {
     document.getElementById("contactPopup").style.display = "none";
 }
-function copyQQ(){
-    navigator.clipboard.writeText("2248653591").then(()=>{
+function copyQQ() {
+    navigator.clipboard.writeText("2248653591").then(() => {
         document.getElementById('copySuccess').textContent = "✅ QQ号码复制成功！";
         document.getElementById('copySuccess').style.display = "block";
-    }).catch(()=>alert("复制失败，请手动复制QQ：2248653591"));
+    }).catch(() => alert("复制失败，请手动复制QQ：2248653591"));
 }
-function copyWechat(){
-    navigator.clipboard.writeText("yangxiaoyang9312").then(()=>{
+function copyWechat() {
+    navigator.clipboard.writeText("yangxiaoyang9312").then(() => {
         document.getElementById('copySuccess').textContent = "✅ 微信号复制成功！";
         document.getElementById('copySuccess').style.display = "block";
-    }).catch(()=>alert("复制失败，请手动复制微信：yangxiaoyang9312"));
+    }).catch(() => alert("复制失败，请手动复制微信：yangxiaoyang9312"));
 }
+
+// 猫爪按钮切换逻辑
+const catPawBtn = document.getElementById("catPawBtn");
+catPawBtn.addEventListener("click", () => {
+    const p1 = document.getElementById('page1');
+    if (p1.classList.contains('page-hide')) {
+        switchPage(1);
+    } else {
+        switchPage(2);
+    }
+});
 </script>
 </body>
 </html>
