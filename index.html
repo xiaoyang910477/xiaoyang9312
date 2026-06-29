@@ -15,10 +15,6 @@
             font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
             background: #222;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
             color: #ffffff;
             text-align: center;
             padding: 18px 15px 25px;
@@ -56,13 +52,23 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
-        .header {
-            animation: pageFade 1.2s ease-out;
+        /* 双页面控制 */
+        .page {
+            width: 100%;
+            animation: pageFade 0.45s ease-out;
+        }
+        .page-hide {
+            display: none !important;
+        }
+        /* 首页第一页 */
+        .page1-header {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 18px;
             width: 100%;
+            min-height: 80vh;
+            justify-content: center;
         }
         h1 {
             font-size: 2.6rem;
@@ -82,8 +88,13 @@
             cursor: pointer;
             transition: transform 0.2s ease;
         }
-        .title-520:hover {
+        .title-end {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .title-end:hover {
             transform: scale(1.15);
+            color: #ff4d94;
         }
         .domain-wrap {
             display: flex;
@@ -101,7 +112,7 @@
         }
         .domain:hover {
             transform: scale(1.03);
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,0.15);
         }
         .contact-btn {
             padding: 13px 30px;
@@ -120,15 +131,40 @@
             box-shadow: 0 8px 24px rgba(255, 77, 148, 0.45);
             background: #ff3385;
         }
-        .links-wrap {
-            animation: pageFade 1.6s ease-out;
+        /* 第二页 工具区域：整体下移+加大文件夹间距 */
+        .page2 {
             max-width: 1000px;
+            margin: 80px auto 0;
             width: 100%;
-            padding: 0;
-            background: none;
+            padding: 0 10px;
         }
+        /* 搜索框样式 */
+        .search-box {
+            width: 100%;
+            margin-bottom: 35px;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.9);
+            color: #222;
+        }
+        #searchInput::placeholder {
+            color: #888;
+        }
+        .empty-tip {
+            padding: 30px;
+            font-size: 16px;
+            opacity: 0.7;
+            display: none;
+        }
+        /* 文件夹加大上下间距，不紧贴 */
         .folder-box {
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
         .folder-title {
             padding: 14px 28px;
@@ -153,6 +189,7 @@
             gap: 14px;
             justify-content: center;
             flex-wrap: wrap;
+            margin-bottom: 10px;
         }
         .folder-box.expanded .sub-links {
             display: flex;
@@ -276,6 +313,7 @@
             align-items: center;
             justify-content: center;
             animation: pageFade 0.3s ease;
+            z-index: 999;
         }
         .popup-content {
             background: white;
@@ -337,6 +375,7 @@
             margin-top: 18px;
             font-size: 0.95rem;
         }
+        /* 居中弹窗 */
         .warn-popup {
             display: flex;
             position: fixed;
@@ -435,15 +474,17 @@
     </style>
 </head>
 <body>
-    <!-- 免责弹窗 -->
+    <!-- 全局固定层：免责弹窗、飘落、鼠标、背景视频 -->
     <div class="warn-popup" id="warnPop">
         <div class="warn-box">
             <h2>网站使用提示</h2>
             <div class="warn-text">
                 此网站由个人开发<br>
                 使用本网站内的软件产生的一切数据风险由使用者自行承担<br>
-                若您不同意 请关闭本网站<br><br>
+                若您不同意 请关闭本网站<br>
+                文件在小阳字里<br><br>
                 我是小阳<br>
+                我的偏爱给了白粥<br>
                 嘿嘿
                 <div class="secret">其实我暗恋白粥小姐姐</div>
             </div>
@@ -453,78 +494,13 @@
             </div>
         </div>
     </div>
-
     <!-- 飘落容器 -->
     <div class="fall-container" id="fallContainer"></div>
-
     <!-- 背景视频 -->
     <video class="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="./bg.mp4" type="video/mp4">
     </video>
-
-    <div class="header">
-        <h1>👋 白粥<span class="title-520" id="click520">520</span>小阳</h1>
-        <div class="domain-wrap">
-            <a class="domain" href="https://yangxiaoyang.fun" target="_blank">🌐 小阳和白粥的家：yangxiaoyang.fun</a>
-            <a class="domain" href="https://xiaoxiaoyang.fun" target="_blank">🌐 小阳和白粥的家：xiaoxiaoyang.fun</a>
-        </div>
-        <button class="contact-btn" onclick="showContact()">📞 联系我</button>
-    </div>
-
-    <div class="links-wrap">
-        <!-- 刷机专区 -->
-        <div class="folder-box">
-            <button class="folder-title">📂 刷机专区</button>
-            <div class="sub-links">
-                <a href="https://www.lanzoui.com/" target="_blank">☁️ 蓝奏云</a>
-                <a href="https://lsdy.lanzoui.com/b0bwa7gif" target="_blank">🤖 搞机助手</a>
-                <a href="https://wwauy.lanzouv.com/ie36U3rt2yvc" target="_blank">🌸 紫罗兰</a>
-                <a href="https://xiaomirom.com/" target="_blank">📦 小米包</a>
-                <a href="https://www.miui.com/unlock/download.html" target="_blank">🔓 小米BL官网</a>
-                <a href="https://user.123pan.cn/centerlogin" target="_blank">💾 123云盘</a>
-                <a href="https://wwbjc.lanzouu.com/iNlof3r6em0d" target="_blank">🔧 刷机驱动</a>
-                <a href="https://wwbjc.lanzouu.com/ikPvB3apy91i" target="_blank">🪟 win11轻松设置</a>
-                <a href="https://wwbjc.lanzouu.com/irHqU3800uqd" target="_blank">💻 重装电脑</a>
-                <a href="https://wwbjc.lanzoup.com/iPwR83aq0fmh" target="_blank">💻 NDM下载器</a>
-            </div>
-        </div>
-        <!-- 电脑官网 -->
-        <div class="folder-box">
-            <button class="folder-title">📂 电脑官网</button>
-            <div class="sub-links">
-                <a href="https://geekuninstaller.com/download" target="_blank">🧹 Geek</a>
-                <a href="https://www.doubao.com/chat/" target="_blank">🤖 豆包</a>
-                <a href="https://live.52tt.com/" target="_blank">🎮 TT娱乐版</a>
-                <a href="https://www.52tt.com/?channel=B59940517.win_gang_pc" target="_blank">🎮 TT游戏版</a>
-                <a href="https://pc.weixin.qq.com/" target="_blank">💬 微信官网</a>
-                <a href="https://im.qq.com/index/#/" target="_blank">🐧 QQ官网</a>
-                <a href="https://download.kugou.com/" target="_blank">🎧 酷狗</a>
-                <a href="https://music.163.com/#/download" target="_blank">🎵 网易云</a>
-                <a href="https://y.qq.com/download/index.html" target="_blank">🎧 QQ音乐</a>
-                <a href="https://wwbjc.lanzouu.com/iuNx13tgy0mf" target="_blank">🎮 风灵月影</a>
-                <a href="https://wwbjc.lanzoup.com/iRrMf3tgynwd" target="_blank">🎮 WeModPro</a>
-                <a href="https://www.tbtool.cn/download/" target="_blank">🛠️ 图吧工具箱</a>
-            </div>
-        </div>
-        <!-- 电脑摧毁 -->
-        <div class="folder-box">
-            <button class="folder-title">📂 电脑摧毁</button>
-            <div class="sub-links">
-                <a href="https://wwbjc.lanzouu.com/iN5kX3tgx8uf" target="_blank">🎰 摩纳哥全套</a>
-                <a href="https://wwbjc.lanzouu.com/iM5Du3tgxbdg" target="_blank">💣 电脑炸弹</a>
-            </div>
-        </div>
-        <!-- 声卡 -->
-        <div class="folder-box">
-            <button class="folder-title">📂 声卡</button>
-            <div class="sub-links">
-                <a href="https://wwbjc.lanzouu.com/i6OwW3tgxb4h" target="_blank">🎤 客所思降级</a>
-                <a href="http://www.kesuosi.com/xz.htm" target="_blank">🎧 客所思驱动官网</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 云朵自定义鼠标 -->
+    <!-- 云朵鼠标 -->
     <div class="cloud-cursor" id="cloudCursor">
         <div class="cloud">
             <div class="cloud-part cloud-middle"></div>
@@ -539,7 +515,6 @@
             </div>
         </div>
     </div>
-
     <!-- 联系弹窗 -->
     <div class="popup" id="contactPopup">
         <div class="popup-content">
@@ -557,8 +532,154 @@
         </div>
     </div>
 
+    <!-- 第一页面：首页 -->
+    <div class="page" id="page1">
+        <div class="page1-header">
+            <h1>👋 白粥<span class="title-520" id="click520">520</span><span class="title-end" onclick="switchPage(2)">小阳</span></h1>
+            <div class="domain-wrap">
+                <a class="domain" href="https://yangxiaoyang.fun" target="_blank">🌐 小阳和白粥的家：yangxiaoyang.fun</a>
+                <a class="domain" href="https://xiaoxiaoyang.fun" target="_blank">🌐 小阳和白粥的家：xiaoxiaoyang.fun</a>
+            </div>
+            <button class="contact-btn" onclick="showContact()">📞 联系我</button>
+        </div>
+    </div>
+
+    <!-- 第二页面：工具文件夹 -->
+    <div class="page page-hide" id="page2">
+        <div class="page2">
+            <!-- 搜索框 -->
+            <div class="search-box">
+                <input id="searchInput" placeholder="输入工具/网站名称搜索..." type="text">
+            </div>
+            <div class="empty-tip" id="emptyTip">未找到匹配的工具链接</div>
+            <!-- 刷机专区 -->
+            <div class="folder-box">
+                <button class="folder-title">📂 刷机专区</button>
+                <div class="sub-links">
+                    <a href="https://www.lanzoui.com/" target="_blank">☁️ 蓝奏云</a>
+                    <a href="https://lsdy.lanzoui.com/b0bwa7gif" target="_blank">🤖 搞机助手</a>
+                    <a href="https://wwauy.lanzouv.com/ie36U3rt2yvc" target="_blank">🌸 紫罗兰</a>
+                    <a href="https://xiaomirom.com/" target="_blank">📦 小米包</a>
+                    <a href="https://www.miui.com/unlock/download.html" target="_blank">🔓 小米BL官网</a>
+                    <a href="https://user.123pan.cn/centerlogin" target="_blank">💾 123云盘</a>
+                    <a href="https://wwbjc.lanzouu.com/iNlof3r6em0d" target="_blank">🔧 刷机驱动</a>
+                    <a href="https://wwbjc.lanzouu.com/ikPvB3apy91i" target="_blank">🪟 win11轻松设置</a>
+                    <a href="https://wwbjc.lanzouu.com/irHqU3800uqd" target="_blank">💻 重装电脑</a>
+                    <a href="https://wwbjc.lanzoup.com/iPwR83aq0fmh" target="_blank">💻 NDM下载器</a>
+                    <a href="https://mt2.cn/download/" target="_blank">🛠️ MT官网</a>
+                    <a href="https://meta.box.lenovo.com/v/link/view/17da39f7061040ba81e457583dc56fe0" target="_blank">📱 联想刷机工具</a>
+                    <a href="https://wwbjc.lanzoup.com/ijZIn3knztsj" target="_blank">📡 QPST9008</a>
+                </div>
+            </div>
+            <!-- 电脑官网 -->
+            <div class="folder-box">
+                <button class="folder-title">📂 电脑官网</button>
+                <div class="sub-links">
+                    <a href="https://geekuninstaller.com/download" target="_blank">🧹 Geek</a>
+                    <a href="https://www.doubao.com/chat/" target="_blank">🤖 豆包</a>
+                    <a href="https://live.52tt.com/" target="_blank">🎮 TT娱乐版</a>
+                    <a href="https://www.52tt.com/?channel=B59940517.win_gang_pc" target="_blank">🎮 TT游戏版</a>
+                    <a href="https://pc.weixin.qq.com/" target="_blank">💬 微信官网</a>
+                    <a href="https://im.qq.com/index/#/" target="_blank">🐧 QQ官网</a>
+                    <a href="https://download.kugou.com/" target="_blank">🎧 酷狗</a>
+                    <a href="https://music.163.com/#/download" target="_blank">🎵 网易云</a>
+                    <a href="https://y.qq.com/download/index.html" target="_blank">🎧 QQ音乐</a>
+                    <a href="https://wwbjc.lanzouu.com/iuNx13tgy0mf" target="_blank">🎮 风灵月影</a>
+                    <a href="https://wwbjc.lanzoup.com/iRrMf3tgynwd" target="_blank">🎮 WeModPro</a>
+                    <a href="https://www.tbtool.cn/download/" target="_blank">🛠️ 图吧工具箱</a>
+                    <a href="https://www.winrar.com.cn/download.htm" target="_blank">📦 RARZIP官网</a>
+                    <a href="https://7-zip.org/download.html" target="_blank">📦 7zip</a>
+                    <a href="https://www.bandisoft.com/bandizip/" target="_blank">📦 Bandizip官网</a>
+                    <a href="https://www.bandisoft.com/bandizip/" target="_blank">🛡️ 火绒官网</a>
+                    <a href="https://baoku.360.cn/sinfo/103259010_4000983.html" target="_blank">🩹 360急救箱</a>
+                </div>
+            </div>
+            <!-- 电脑摧毁 -->
+            <div class="folder-box">
+                <button class="folder-title">📂 电脑摧毁</button>
+                <div class="sub-links">
+                    <a href="https://wwbjc.lanzouu.com/iN5kX3tgx8uf" target="_blank">🎰 摩纳哥全套</a>
+                    <a href="https://wwbjc.lanzouu.com/iM5Du3tgxbdg" target="_blank">💣 电脑炸弹</a>
+                </div>
+            </div>
+            <!-- 声卡 -->
+            <div class="folder-box">
+                <button class="folder-title">📂 声卡</button>
+                <div class="sub-links">
+                    <a href="https://wwbjc.lanzouu.com/i6OwW3tgxb4h" target="_blank">🎤 客所思降级</a>
+                    <a href="http://www.kesuosi.com/xz.htm" target="_blank">🎧 客所思驱动官网</a>
+                    <a href="https://1816769606.share.123pan.cn/123pan/O7V6Vv-pi91v" target="_blank">🔊 5.1军火库</a>
+                    <a href="https://1816769606.share.123pan.cn/123pan/O7V6Vv-Kenmv" target="_blank">🎶 全套虚拟声卡</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script>
-// 表白文字（保持4句，生成比例降低，文字变少）
+// 页面切换
+function switchPage(num) {
+    const p1 = document.getElementById('page1');
+    const p2 = document.getElementById('page2');
+    if(num === 1){
+        p1.classList.remove('page-hide');
+        p2.classList.add('page-hide');
+    }else{
+        p1.classList.add('page-hide');
+        p2.classList.remove('page-hide');
+    }
+}
+
+// 【最终修复版搜索逻辑】自动展开匹配文件夹
+const searchInput = document.getElementById('searchInput');
+const emptyTip = document.getElementById('emptyTip');
+const allFolders = document.querySelectorAll('.folder-box');
+
+// 先保存每个文件夹原始的展开状态
+const folderOriginalExpanded = new Map();
+allFolders.forEach(folder => {
+    folderOriginalExpanded.set(folder, folder.classList.contains('expanded'));
+});
+
+search.addEventListener('input', function(){
+    const keyword = this.value.trim().toLowerCase();
+    let matchNum = 0;
+
+    // 第一步：先重置所有文件夹状态
+    allFolders.forEach(folder => {
+        folder.classList.remove('expanded');
+    });
+
+    // 第二步：遍历所有链接，筛选并标记匹配的文件夹
+    const allLinks = document.querySelectorAll('.sub-links a');
+    allLinks.forEach(link => {
+        const text = link.innerText.toLowerCase();
+        const folderBox = link.closest('.folder-box');
+        if (keyword === '' || text.includes(keyword)) {
+            link.style.display = 'flex';
+            matchNum++;
+            // 自动展开包含匹配项的文件夹
+            folderBox.classList.add('expanded');
+        } else {
+            link.style.display = 'none';
+        }
+    });
+
+    // 第三步：如果清空搜索，恢复文件夹原始展开状态
+    if (keyword === '') {
+        allFolders.forEach(folder => {
+            if (folderOriginalExpanded.get(folder)) {
+                folder.classList.add('expanded');
+            } else {
+                folder.classList.remove('expanded');
+            }
+        });
+    }
+
+    // 控制空提示
+    emptyTip.style.display = matchNum === 0 ? 'block' : 'none';
+});
+
+// 飘落文字
 const loveTexts = [
     "小阳喜欢白粥",
     "小阳爱白粥",
@@ -568,7 +689,7 @@ const loveTexts = [
 let fallTimer = null;
 let isLoopFall = false;
 
-// 进入网站关闭弹窗，无声音
+// 免责弹窗
 function agreeSite() {
     document.getElementById("warnPop").style.display = "none";
 }
@@ -576,7 +697,7 @@ function closePage() {
     window.close();
 }
 
-// 循环生成飘落元素，单次生成数量减少
+// 生成飘落元素
 function spawnSingle() {
     const container = document.getElementById("fallContainer");
     const item = document.createElement("div");
@@ -584,12 +705,9 @@ function spawnSingle() {
     const size = Math.random() * 22 + 12;
     const left = Math.random() * 100;
     const delay = Math.random() * 1.2;
-
     item.style.left = left + "%";
     item.style.animationDelay = delay + "s";
     item.style.fontSize = size + "px";
-
-    // 文字比例降低，爱心雪花更多，文字更少
     if (randomType > 0.7) {
         item.className = "fall-text";
         item.textContent = loveTexts[Math.floor(Math.random() * loveTexts.length)];
@@ -603,18 +721,13 @@ function spawnSingle() {
         item.style.color = "#ffffff";
     }
     container.appendChild(item);
-
-    // 动画结束自动删除元素，防止堆积
-    setTimeout(()=>{
-        item.remove();
-    },10000);
+    setTimeout(()=>item.remove(),10000);
 }
 
-// 点击520切换循环开启/关闭
+// 520飘落开关
 document.getElementById("click520").addEventListener("click",()=>{
     if(!isLoopFall){
         isLoopFall = true;
-        // 每300ms生成一个，密度降低，不会密密麻麻
         fallTimer = setInterval(spawnSingle,300);
     }else{
         isLoopFall = false;
@@ -622,15 +735,16 @@ document.getElementById("click520").addEventListener("click",()=>{
     }
 });
 
-// 云朵鼠标逻辑
-const cloudCursor = document.getElementById("cloudCursor");
+// 文件夹展开收起
 const folderTitles = document.querySelectorAll('.folder-title');
 folderTitles.forEach(titleBtn => {
     titleBtn.addEventListener('click', function(){
-        const parentFolder = this.closest('.folder-box');
-        parentFolder.classList.toggle('expanded');
+        this.closest('.folder-box').classList.toggle('expanded');
     })
-})
+});
+
+// 云朵鼠标
+const cloudCursor = document.getElementById("cloudCursor");
 document.addEventListener("mousemove", (e) => {
     cloudCursor.style.left = e.clientX + "px";
     cloudCursor.style.top = e.clientY + "px";
@@ -640,7 +754,7 @@ document.addEventListener("mouseup", () => cloudCursor.classList.remove("active"
 
 // 复制联系方式
 function showContact() {
-    document.getElementById("contactPopup").style.display = "flex";
+    document.getElementById("contactPopup").style.display = "none";
     document.getElementById("copySuccess").style.display = "none";
 }
 function hideContact() {
