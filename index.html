@@ -489,9 +489,197 @@
         .cat-paw-toggle:active {
             transform: scale(0.95);
         }
+        /* ========== 密码弹窗样式（修复鼠标cursor） ========== */
+        .password-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.85);
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: auto !important;
+        }
+        .pwd-box {
+            background: #fff;
+            width: 90%;
+            max-width: 420px;
+            padding: 35px 25px;
+            border-radius: 22px;
+            cursor: auto !important;
+        }
+        .pwd-box h2 {
+            color: #ff4d94;
+            margin-bottom: 22px;
+            font-size: 1.5rem;
+            cursor: auto !important;
+        }
+        #pwdInput {
+            width: 100%;
+            padding: 13px 16px;
+            border: 1px solid #ffb8d8;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            margin-bottom: 20px;
+            cursor: text !important;
+            caret-color: #ff4d94;
+        }
+        .submit-pwd {
+            width: 100%;
+            padding: 12px;
+            background: #ff4d94;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer !important;
+        }
+        /* 密码错误粉色弹窗 */
+        .error-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: auto !important;
+        }
+        .error-box {
+            background: #ffcce0;
+            color: #d62860;
+            padding: 30px 24px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            cursor: auto !important;
+        }
+        .error-box h3 {
+            margin-bottom: 16px;
+            font-size: 1.3rem;
+            cursor: auto !important;
+        }
+        .error-text {
+            margin-bottom: 22px;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            cursor: auto !important;
+        }
+        .error-btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .copy-free-pwd {
+            padding: 10px 20px;
+            background: #ff4d94;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer !important;
+        }
+        .close-error {
+            padding: 10px 20px;
+            background: #fff;
+            color: #ff4d94;
+            border: 1px solid #ff4d94;
+            border-radius: 25px;
+            cursor: pointer !important;
+        }
+        /* 复制成功弹窗 */
+        .success-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: auto !important;
+        }
+        .success-box {
+            background: #fff;
+            padding: 30px 26px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            cursor: auto !important;
+        }
+        .success-box h3 {
+            color: #28a745;
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+        }
+        .success-ok-btn {
+            padding: 10px 30px;
+            background: #ff4d94;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer !important;
+        }
+        /* 右上角用户标识 */
+        .user-tag {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            font-size: 26px;
+            z-index: 9997;
+            display: none;
+        }
+        .user-tag.free-text {
+            font-size: 12px;
+            color: #ff4d94;
+            background: rgba(0,0,0,0.35);
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
+    <!-- 密码验证弹窗 -->
+    <div class="password-mask" id="pwdMask">
+        <div class="pwd-box">
+            <h2>请输入访问密码</h2>
+            <input type="text" id="pwdInput" placeholder="输入密码进入网站">
+            <button class="submit-pwd" onclick="checkPassword()">确认进入</button>
+        </div>
+    </div>
+    <!-- 密码错误粉色弹窗 -->
+    <div class="error-mask" id="errorMask">
+        <div class="error-box">
+            <h3>密码错误</h3>
+            <div class="error-text">
+                免费访问密码：123456
+            </div>
+            <div class="error-btn-group">
+                <button class="copy-free-pwd" onclick="copyFreePwd()">复制免费密码</button>
+                <button class="close-error" onclick="closeErrorBox()">返回输入</button>
+            </div>
+        </div>
+    </div>
+    <!-- 复制成功弹窗 -->
+    <div class="success-mask" id="successMask">
+        <div class="success-box">
+            <h3>✅ 免费密码复制成功！</h3>
+            <button class="success-ok-btn" onclick="closeSuccessBox()">确定</button>
+        </div>
+    </div>
+    <!-- 右上角用户标识 -->
+    <div class="user-tag" id="userTag"></div>
+
     <div class="warn-popup" id="warnPop">
         <div class="warn-box">
             <h2>网站使用提示</h2>
@@ -511,13 +699,10 @@
             </div>
         </div>
     </div>
-
     <div class="fall-container" id="fallContainer"></div>
-
     <video class="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="./bg.mp4" type="video/mp4">
     </video>
-
     <div class="cloud-cursor" id="cloudCursor">
         <div class="cloud">
             <div class="cloud-part cloud-middle"></div>
@@ -532,7 +717,6 @@
             </div>
         </div>
     </div>
-
     <div class="popup" id="contactPopup">
         <div class="popup-content">
             <h3>联系小阳</h3>
@@ -548,18 +732,13 @@
             <div class="copy-success" id="copySuccess" style="display: none;"></div>
         </div>
     </div>
-
     <!-- 第一页面 -->
     <div class="page" id="page1">
         <div class="page1-header">
-            <!-- 1.最顶部：白粥520小阳标题 -->
             <h1>👋 白粥<span class="title-520" id="click520">520</span><span class="title-end" onclick="switchPage(2)">小阳</span></h1>
-            <!-- 2.标题下方：联系我按钮 -->
             <button class="contact-btn" onclick="showContact()">📞 联系我</button>
-            <!-- 已彻底删除两个小阳和白粥的家链接 -->
         </div>
     </div>
-
     <!-- 第二页面 -->
     <div class="page page-hide" id="page2">
         <div class="page2">
@@ -567,7 +746,6 @@
                 <input id="searchInput" placeholder="输入工具/网站名称搜索..." type="text">
             </div>
             <div class="empty-tip" id="emptyTip">未找到匹配的工具链接</div>
-
             <div class="folder-box">
                 <button class="folder-title">📂 刷机专区</button>
                 <div class="sub-links">
@@ -586,7 +764,6 @@
                     <a href="https://wwbjc.lanzoup.com/ijZIn3knztsj" target="_blank">📡 QPST9008</a>
                 </div>
             </div>
-
             <div class="folder-box">
                 <button class="folder-title">📂 电脑官网</button>
                 <div class="sub-links">
@@ -610,7 +787,6 @@
                     <a href="https://baoku.360.cn/sinfo/103259010_4000983.html" target="_blank">🩹 360急救箱</a>
                 </div>
             </div>
-
             <div class="folder-box">
                 <button class="folder-title">📂 电脑摧毁</button>
                 <div class="sub-links">
@@ -618,7 +794,6 @@
                     <a href="https://wwbjc.lanzouu.com/iM5Du3tgxbdg" target="_blank">💣 电脑炸弹</a>
                 </div>
             </div>
-
             <div class="folder-box">
                 <button class="folder-title">📂 声卡</button>
                 <div class="sub-links">
@@ -628,7 +803,6 @@
                     <a href="https://1816769606.share.123pan.cn/123pan/O7V6Vv-Kenmv" target="_blank">🎶 全套虚拟声卡</a>
                 </div>
             </div>
-            <!-- 新增电脑工具文件夹 -->
             <div class="folder-box">
                 <button class="folder-title">📂 电脑工具</button>
                 <div class="sub-links">
@@ -639,11 +813,58 @@
             </div>
         </div>
     </div>
-
     <!-- 猫爪切换按钮 -->
     <div class="cat-paw-toggle" id="catPawBtn" title="切换页面">🐾</div>
-
 <script>
+// ========== 密码验证功能 ==========
+const pwdMask = document.getElementById('pwdMask');
+const errorMask = document.getElementById('errorMask');
+const successMask = document.getElementById('successMask');
+const userTag = document.getElementById('userTag');
+// 合法密码列表
+const validPwd = {
+    "小阳": "👑",
+    "白粥": "❤️",
+    "123456": "free"
+};
+// 校验密码
+function checkPassword() {
+    const inputVal = document.getElementById('pwdInput').value.trim();
+    if (validPwd.hasOwnProperty(inputVal)) {
+        pwdMask.style.display = "none";
+        userTag.style.display = "block";
+        if (validPwd[inputVal] === "free") {
+            userTag.className = "user-tag free-text";
+            userTag.innerText = "免费用户";
+        } else {
+            userTag.className = "user-tag";
+            userTag.innerText = validPwd[inputVal];
+        }
+    } else {
+        errorMask.style.display = "flex";
+    }
+}
+// 关闭错误弹窗
+function closeErrorBox() {
+    errorMask.style.display = "none";
+}
+// 关闭复制成功弹窗
+function closeSuccessBox() {
+    successMask.style.display = "none";
+}
+// 复制免费密码123456，成功弹出弹窗
+function copyFreePwd() {
+    navigator.clipboard.writeText("123456").then(() => {
+        successMask.style.display = "flex";
+    }).catch(() => {
+        alert("复制失败，免费密码：123456");
+    });
+}
+// 回车快捷提交密码
+document.getElementById("pwdInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") checkPassword();
+});
+
 // 页面切换
 function switchPage(num) {
     const p1 = document.getElementById('page1');
@@ -656,17 +877,14 @@ function switchPage(num) {
         p2.classList.remove('page-hide');
     }
 }
-
-// 搜索框 修复变量名错误
+// 搜索框
 const searchInput = document.getElementById('searchInput');
 const emptyTip = document.getElementById('emptyTip');
 const allFolders = document.querySelectorAll('.folder-box');
-// 保存文件夹原始展开状态
 const folderOriginalExpanded = new Map();
 allFolders.forEach(folder => {
     folderOriginalExpanded.set(folder, folder.classList.contains('expanded'));
 });
-// 搜索监听
 searchInput.addEventListener('input', function () {
     const keyword = this.value.trim().toLowerCase();
     let matchNum = 0;
@@ -690,20 +908,16 @@ searchInput.addEventListener('input', function () {
     }
     emptyTip.style.display = matchNum === 0 ? 'block' : 'none';
 });
-
 // 飘落文字
 const loveTexts = ["小阳喜欢白粥", "小阳爱白粥", "小阳暗恋白粥", "小阳想和白粥一直在一起"];
 let fallTimer = null;
 let isLoopFall = false;
-
 function agreeSite() {
     document.getElementById("warnPop").style.display = "none";
 }
 function closePage() {
     window.close();
 }
-
-// 生成飘落元素
 function spawnSingle() {
     const container = document.getElementById("fallContainer");
     const item = document.createElement("div");
@@ -729,8 +943,6 @@ function spawnSingle() {
     container.appendChild(item);
     setTimeout(() => item.remove(), 10000);
 }
-
-// 520飘落开关
 document.getElementById("click520").addEventListener("click", () => {
     if (!isLoopFall) {
         isLoopFall = true;
@@ -740,16 +952,14 @@ document.getElementById("click520").addEventListener("click", () => {
         clearInterval(fallTimer);
     }
 });
-
-// 文件夹点击展开（修复绑定）
+// 文件夹点击展开
 const folderTitles = document.querySelectorAll('.folder-title');
 folderTitles.forEach(title => {
     title.addEventListener('click', function () {
         this.closest('.folder-box').classList.toggle('expanded');
     });
 });
-
-// 云朵鼠标 完整修复
+// 云朵自定义鼠标
 const cloudCursor = document.getElementById("cloudCursor");
 document.addEventListener("mousemove", e => {
     cloudCursor.style.left = e.clientX + "px";
@@ -757,8 +967,7 @@ document.addEventListener("mousemove", e => {
 });
 document.addEventListener("mousedown", () => cloudCursor.classList.add("active"));
 document.addEventListener("mouseup", () => cloudCursor.classList.remove("active"));
-
-// 复制联系方式
+// 复制联系方式弹窗
 function showContact() {
     document.getElementById("contactPopup").style.display = "flex";
     document.getElementById("copySuccess").style.display = "none";
@@ -778,8 +987,7 @@ function copyWechat() {
         document.getElementById('copySuccess').style.display = "block";
     }).catch(() => alert("复制失败，请手动复制微信：yangxiaoyang9312"));
 }
-
-// 猫爪切换按钮
+// 猫爪切换页面
 const catPawBtn = document.getElementById("catPawBtn");
 catPawBtn.addEventListener("click", () => {
     const p1 = document.getElementById('page1');
