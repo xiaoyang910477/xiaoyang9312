@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小阳 | 安卓刷机技术主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        body {
+            background-color: #0f0f1a;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        nav {
+            background-color: #1a1a2e;
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #ff4081;
+        }
+
+        nav h1 {
+            color: #ff4081;
+            font-size: 1.5rem;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 个人简介区域（引入bg.jpg头像） */
+        .profile {
+            text-align: center;
+            margin: 3rem 0;
+        }
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff4081;
+            box-shadow: 0 0 25px rgba(255, 64, 129, 0.35);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile h2 {
+            font-size: 2.5rem;
+            color: #ff4081;
+            margin-bottom: 1rem;
+        }
+
+        .profile p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #b0b0b0;
+        }
+
+        /* 技能卡片 */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .skill-card {
+            background-color: #1a1a2e;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #2a2a4e;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff4081;
+            box-shadow: 0 8px 20px rgba(255, 64, 129, 0.2);
+        }
+
+        .skill-card h3 {
+            color: #ff4081;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-card p {
+            color: #d0d0d0;
+            font-size: 0.95rem;
+        }
+
+        /* 项目展示 */
+        .projects {
+            margin: 4rem 0;
+        }
+
+        .projects h2 {
+            color: #ff4081;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .project-item {
+            background-color: #1a1a2e;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #ff4081;
+        }
+
+        .project-item h4 {
+            color: #ff4081;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-item p {
+            color: #b0b0b0;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #1a1a2e;
+            border-top: 2px solid #ff4081;
+            color: #808080;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>小阳的技术世界</h1>
+    </nav>
+
+    <div class="container">
+        <section class="profile">
+            <!-- 调用仓库内的bg.jpg作为头像 -->
+            <img src="bg.jpg" alt="小阳本人照片" class="avatar">
+            <h2>你好，我是小阳 👋</h2>
+            <p>
+                一名深耕安卓底层的技术爱好者，精通各类手机刷机救砖、Root权限、MTK/高通芯片底层操作。
+                专注设备解锁、系统镜像修改、内核调试，同时会搭建个人静态网站、编写批量处理脚本。
+            </p>
+        </section>
+
+        <section class="skills">
+            <div class="skill-card">
+                <h3>🔧 高通9008 EDL救砖</h3>
+                <p>熟练高通深度9008端口线刷，设备黑屏、卡logo、变砖不开机都能修复，处理分区损坏、底层丢失问题。</p>
+            </div>
+            <div class="skill-card">
+                <h3>⚡ Magisk / KernelSU Root</h3>
+                <p>主流机型一键修补boot，稳定获取系统最高权限，隐藏root、模块安装、系统读写修改全套操作。</p>
+            </div>
+            <div class="skill-card">
+                <h3>📱 MTK联发科全平台刷机</h3>
+                <p>SP Flash工具线刷、MTK解锁、镜像解包封包，处理联发科机型救砖、分区替换、机型定制。</p>
+            </div>
+            <div class="skill-card">
+                <h3>🔄 第三方ROM刷机定制</h3>
+                <p>TWRP卡刷、系统精简、预装软件移除、性能/续航调校，自定义专属手机系统。</p>
+            </div>
+            <div class="skill-card">
+                <h3>🖥️ Windows批处理脚本开发</h3>
+                <p>编写BAT自动化工具，文件批量转换、系统清理、编码修复、工具箱一键操作。</p>
+            </div>
+            <div class="skill-card">
+                <h3>🌐 GitHub Pages 个人站搭建</h3>
+                <p>独立开发密码访问网站、资源导航站，自定义弹窗、背景视频、分类资源页面部署。</p>
+            </div>
+        </section>
+
+        <section class="projects">
+            <h2>我的技术项目</h2>
+            <div class="project-item">
+                <h4>个人刷机资源导航站</h4>
+                <p>整合高通/MTK工具、面具内核、远程工具、刷机教程，方便同好快速取用各类技术资源。</p>
+            </div>
+            <div class="project-item">
+                <h4>手机救砖工具合集</h4>
+                <p>整理9008驱动、SP工具、TWRP镜像、ADB套件，配套图文教程，帮大量用户救回变砖手机。</p>
+            </div>
+            <div class="project-item">
+                <h4>自动化电脑工具箱脚本</h4>
+                <p>自制批处理工具，解决文件乱码、批量重命名、缓存清理、压缩打包等日常繁琐操作。</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 小阳 | 安卓底层技术探索 | 持续更新刷机与开发内容</p>
+    </footer>
+</body>
+</html>
